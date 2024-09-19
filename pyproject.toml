@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools", "Cython", "wheel", "setuptools_scm[toml]>=8"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyproject-cython-test"
+description = "pyproject cython test"
+readme = "README.md"
+requires-python = ">=3.8"
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = ["mypy", "pytest", "ruff"]
+
+[tool.setuptools]
+py-modules = ["_build"]
+include-package-data = false
+# This section will be processed by custom build backend
+ext-modules = [
+    {name="package", sources=["package"]},
+]
+
+[tool.setuptools.cmdclass]
+build_py = "_build.build_py"
+
+[tool.setuptools_scm]
+version_file = "package/_version.py"
